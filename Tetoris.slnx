@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="Tetoris.vcxproj" Id="68ee4c95-458d-4bfb-8fa2-babf76a76c5a" />
+</Solution>
