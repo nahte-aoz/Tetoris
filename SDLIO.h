@@ -89,6 +89,24 @@ private:
     bool mStarted;
 };
 
+//class IO {
+//public:
+//    void drawRectangle(int x, int y, int rectWidth, int rectHeight);
+//
+//    void destroy();
+//
+//    void setColor();
+//
+//    void setAlpha();
+//
+//    void setBlending();
+//
+//    void render();
+//
+//private:
+//    SDL_FRect mRectangle;
+//};
+
 /* Function Prototypes */
 //Starts up SDL and creates window
 bool init();

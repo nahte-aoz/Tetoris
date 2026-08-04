@@ -298,13 +298,13 @@ bool loadMedia()
     bool success{ true };
 
     //Load glocal assets
-    if (gSquareTexture.loadFromFile("19-state-machines/dot.png") == false)
+    if (gSquareTexture.loadFromFile("Square.png") == false)
     {
         SDL_Log("Unable to dot image!\n");
         success = false;
     }
     //Load scene font
-    std::string fontPath{ "19-state-machines/lazy.ttf" };
+    std::string fontPath{ "Tetris.ttf" };
     if (gFont = TTF_OpenFont(fontPath.c_str(), 28); gFont == nullptr)
     {
         SDL_Log("Could not load %s! SDL_ttf Error: %s\n", fontPath.c_str(), SDL_GetError());

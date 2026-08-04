@@ -18,6 +18,12 @@ public:
 
 	void createNewPiece();
 
+	void renderPiece(int x, int y);
+
+	Board* getBoard();
+
+	Pieces* getPieces();
+
 	int mPosX, mPosY; // Position of the piece that is falling down
 	int mPiece, mRotation; // Kind and rotation the piece that is falling down
 
