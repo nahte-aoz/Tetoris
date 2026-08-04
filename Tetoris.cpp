@@ -140,9 +140,6 @@
 //		std::cout << '\n';
 //	}
 //
-//	delete pieces;
-//	delete board;
-//
 //	return 0;
 //}
 
@@ -155,6 +152,8 @@ int main(int argc, char* args[]) {
 
 		game.createNewPiece();
 	}
+
+	std::cout << "Exited loop";
 
 	return 0;
 }

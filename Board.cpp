@@ -84,8 +84,6 @@ void Board::deleteLine(int y) {
 	}
 }
 
-Board::~Board() { delete mPieces; }
-
 Board Board::sBoard{};
 
 Board::Board() { Board::initBoard(); }

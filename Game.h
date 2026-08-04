@@ -21,8 +21,6 @@ public:
 	int mPosX, mPosY; // Position of the piece that is falling down
 	int mPiece, mRotation; // Kind and rotation the piece that is falling down
 
-	~Game();
-
 private:
 
 	int mNextPosX, mNextPosY; // Position of the next piece

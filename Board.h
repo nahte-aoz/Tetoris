@@ -46,7 +46,7 @@ public:
     Board(Board&& board) = delete;
     Board& operator=(Board&& board) = delete;
 
-    ~Board();
+    ~Board() = default;
 
 private:
     static Board sBoard;

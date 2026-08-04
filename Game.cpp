@@ -27,8 +27,3 @@ void Game::initGame() {
 Game::Game() {
 	initGame();
 }
-
-Game::~Game() {
-	delete mPieces;
-	delete mBoard;
-}
