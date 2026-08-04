@@ -1,12 +1,13 @@
 /* Welcome to Tetoris! */
 
+#include <iostream>
 #include <SDL3/SDL_main.h>
 #include "SDLIO.h"
-#include "Board.h"
 #include "Constants.h"
 #include "Globals.h"
 #include "Pieces.h"
-#include <iostream>
+#include "Board.h"
+#include "Game.h"
 
 //int main(int argc, char* args[])
 //{
@@ -113,30 +114,47 @@
 //}
 
 /* Test Board */
+//int main(int argc, char* args[]) {
+//	Pieces* pieces{ Pieces::get() };
+//	Board* board{ Board::get() };
+//
+//	if (board->isPossibleMovement(1, 0, 5, 5)) {
+//		board->storePiece(1, 0, 5, 5);
+//	}
+//
+//	board->storePiece(0, 0, 0, 0);
+//
+//	board->storePiece(3, 0, 5, 13);
+//
+//	board->storePiece(6, 2, 0, 13);
+//
+//	for (int y{}; y < kBoardHeight; ++y) {
+//		for (int x{}; x < kBoardWidth; ++x) {
+//			if (board->isFreeBlock(x, y)) {
+//				std::cout << '.';
+//			}
+//			if (!board->isFreeBlock(x, y)) {
+//				std::cout << '#';
+//			}
+//		}
+//		std::cout << '\n';
+//	}
+//
+//	delete pieces;
+//	delete board;
+//
+//	return 0;
+//}
+
+/* Test Game */
 int main(int argc, char* args[]) {
-	Pieces* pieces{ Pieces::get() };
-	Board* board{ Board::get() };
+	Game game{ };
 
-	if (board->isPossibleMovement(1, 0, 5, 5)) {
-		board->storePiece(1, 0, 5, 5);
+	for (int i{}; i < 12; i++) {
+		std::cout << i + 1 << ") " << game.mPiece << ' ' << game.mRotation << ' ' << game.mPosX << ' ' << game.mPosY << '\n';
+
+		game.createNewPiece();
 	}
 
-	board->storePiece(0, 0, 0, 0);
-
-	board->storePiece(3, 0, 5, 13);
-
-	board->storePiece(6, 2, 0, 13);
-
-	for (int y{}; y < kBoardHeight; ++y) {
-		for (int x{}; x < kBoardWidth; ++x) {
-			if (board->isFreeBlock(x, y)) {
-				std::cout << '.';
-			}
-			if (!board->isFreeBlock(x, y)) {
-				std::cout << '#';
-			}
-		}
-		std::cout << '\n';
-	}
 	return 0;
 }

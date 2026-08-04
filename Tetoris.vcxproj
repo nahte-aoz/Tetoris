@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Globals.cpp" />
     <ClCompile Include="Pieces.cpp" />
     <ClCompile Include="SDLIO.cpp" />
@@ -28,8 +29,10 @@
   <ItemGroup>
     <ClInclude Include="Board.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Pieces.h" />
+    <ClInclude Include="Random.h" />
     <ClInclude Include="SDLIO.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

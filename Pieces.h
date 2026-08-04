@@ -15,6 +15,14 @@ public:
     int getXInitialPosition(int piece, int rotation);
     int getYInitialPosition(int piece, int rotation);
 
+    Pieces(const Pieces& pieces) = delete;
+    Pieces& operator=(const Pieces& pieces) = delete;
+
+    Pieces(Pieces&& pieces) = delete;
+    Pieces& operator=(Pieces&& pieces) = delete;
+
+    ~Pieces() = default;
+
 private:
     static Pieces sPieces;
 

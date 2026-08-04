@@ -37,13 +37,22 @@ public:
     // Block coordinates -> pixel coordinates, for the renderer to use later.
     int getXPosInPixels(int blockX) const;
     int getYPosInPixels(int blockY) const;
+    
+    void initBoard();
+
+    Board(const Board& board) = delete;
+    Board& operator=(const Board& board) = delete;
+
+    Board(Board&& board) = delete;
+    Board& operator=(Board&& board) = delete;
+
+    ~Board();
 
 private:
     static Board sBoard;
 
     Board();
 
-    void initBoard();
     void deleteLine(int y);
 
     enum { POS_FREE, POS_FILLED };

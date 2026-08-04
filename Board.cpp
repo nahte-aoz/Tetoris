@@ -77,12 +77,14 @@ void Board::initBoard() {
 }
 
 void Board::deleteLine(int y) {
-	for (int boardY =  y ; boardY > 0; ++boardY) {
+	for (int boardY = y ; boardY > 0; --boardY) {
 		for (int boardX{}; boardX < kBoardWidth; ++boardX) {
 			mBoard[boardX][boardY] = mBoard[boardX][boardY - 1];
 		}
 	}
 }
+
+Board::~Board() { delete mPieces; }
 
 Board Board::sBoard{};
 
