@@ -15,24 +15,26 @@ void Game::createNewPiece() {
 void Game::renderPiece() {
 
     // Set color based off piece type
-    if (mPiece == 0 || mPiece == 3 || mPiece == 6)
-        mPieceColor = 0;
-    else if (mPiece == 1 || mPiece == 4)
-        mPieceColor = 1;
-    else if (mPiece == 2 || mPiece == 5)
-        mPieceColor = 2;
+    if (mPiece == Pieces::SQUARE_BLOCK  || mPiece == Pieces::L_REVERSE || mPiece == Pieces::N_REVERSE)
+        mPieceColor = RED;
+    else if (mPiece == Pieces::I_BLOCK || mPiece == Pieces::N_BLOCK)
+        mPieceColor = GREEN;
+    else if (mPiece == Pieces::L_BLOCK || mPiece == Pieces::N_REVERSE)
+        mPieceColor = BLUE;
 
     // Only set color if it's a new piece
     if (mNewPiece) {
-        gSquareTexture.setColor(mColors[mPieceColor][red], mColors[mPieceColor][green], mColors[mPieceColor][blue]);
+        gSquareTexture.setColor(mColors[mPieceColor][RED], mColors[mPieceColor][GREEN], mColors[mPieceColor][BLUE]);
         mNewPiece = false;
     }
 
     // Hold the x, y, and indexes of the last square in the piece that was rendered
     // The x is initialized with the left pixels of the board + the initial starting point + one block to account for
     // me not being able to render the board precisely in the middle of the screen. Teehee
-    int lastSquareX{ kBoardLimitLeft + (mPosX * kBlockSize) + kBlockSize };
-    int lastSquareY{ kBoardLimitUp };
+    /*kBoardLimitLeft + (mPosX * kBlockSize) + kBlockSize
+        kScreenHeight - (kBlockSize * kBoardHeight) + (mPosY * kBlockSize) + kBlockSize*/
+    int lastSquareX{ mBoard->getXPosInPixels(mPosX) };
+    int lastSquareY{ mBoard->getYPosInPixels(mPosY) };
     int lastSquareRow{ 0 };
     int lastSquareCol{ 0 };
 

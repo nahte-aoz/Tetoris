@@ -6,18 +6,18 @@
 #include "SDLIO.h"
 
 /* Constants */
-constexpr int kBoardLimitLeft{ kBoardPosition - (kBlockSize * (kBoardWidth / 2)) - 1 };
-constexpr int kBoardLimitRight{ kBoardPosition + (kBlockSize * (kBoardWidth / 2)) - 1 };
+constexpr int kBoardLimitLeft{ kBoardPosition - (kBlockSize * (kBoardWidth / 2)) };
+constexpr int kBoardLimitRight{ kBoardPosition + (kBlockSize * (kBoardWidth / 2)) };
 constexpr int kBoardLimitUp{ kScreenHeight - (kBlockSize * kBoardHeight) };
 
 class Game
 {
 public:
 	enum Colors {
-		red,
-		green,
-		blue,
-		maxColors,
+		RED,
+		GREEN,
+		BLUE,
+		MAX_COLORS,
 	};
 
 	Game();
@@ -37,7 +37,7 @@ public:
 
 private:
 
-	Uint8 mColors[maxColors][maxColors]{
+	Uint8 mColors[MAX_COLORS][MAX_COLORS]{
 		/* Red */   {0x9F, 0x00, 0x00},
 		/* Green */ {0x00, 0x9F, 0x00},
 		/* Blue */  {0x00, 0x00, 0x9F}

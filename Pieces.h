@@ -9,6 +9,17 @@ constexpr int kPos{ 2 };
 
 class Pieces {
 public:
+    enum Type {
+        SQUARE_BLOCK,
+        I_BLOCK,
+        L_BLOCK,
+        L_REVERSE,
+        N_BLOCK,
+        N_REVERSE,
+        T_BLOCK,
+        MAX_TYPES,
+    };
+
     static Pieces* get();
 
     int getBlockType(int piece, int rotation, int x, int y);

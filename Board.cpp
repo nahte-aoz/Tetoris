@@ -6,18 +6,18 @@ Board* Board::get() {
 }
 
 bool Board::isFreeBlock(int x, int y) const {
-	return mBoard[x][y] == 0;
+	return mBoard[x][y] == -1;
 }
 
 bool Board::isPossibleMovement(int piece, int rotation, int x, int y) const {
 	for (int boardX = x, piecesRowIndex{ 0 }; boardX < x + mPieceBlocks; ++boardX, ++piecesRowIndex) {
 		for (int boardY = y, piecesColIndex{ 0 }; boardY < y + mPieceBlocks; ++boardY, ++piecesColIndex) {
 			if (boardX < 0 || boardX > kBoardWidth || boardY > kBoardHeight) {
-				if (mPieces->getBlockType(piece, rotation, piecesColIndex, piecesRowIndex) != 0)
+				if (mPieces->getBlockType(piece, rotation, piecesColIndex, piecesRowIndex) != -1)
 					return false;
 			}
 			if (boardY >= 0) {
-				if (mPieces->getBlockType(piece, rotation, piecesColIndex, piecesRowIndex) != 0 && !isFreeBlock(boardX, boardY)) {
+				if (mPieces->getBlockType(piece, rotation, piecesColIndex, piecesRowIndex) != -1 && !isFreeBlock(boardX, boardY)) {
 					return false;
 				}
 			}
@@ -33,7 +33,7 @@ void Board::storePiece(int piece, int rotation, int x, int y) {
 
 	for (int boardX = x, piecesRowIndex{ 0 }; boardX < x + mPieceBlocks; ++boardX, ++piecesRowIndex) {
 		for (int boardY = y, piecesColIndex{ 0 }; boardY < y + mPieceBlocks; ++boardY, ++piecesColIndex) {
-			if (mPieces->getBlockType(piece, rotation, piecesColIndex, piecesRowIndex) != 0)
+			if (mPieces->getBlockType(piece, rotation, piecesColIndex, piecesRowIndex) != -1)
 				mBoard[boardX][boardY] = piece;
 		}
 	}
@@ -43,7 +43,7 @@ void Board::deletePossibleLines() {
 	for (int boardY{ 0 }; boardY < kBoardHeight; ++boardY) {
 		int boardX{};
 		while (boardX < kBoardWidth) {
-			if (mBoard[boardX][boardY] != 0) break;
+			if (mBoard[boardX][boardY] != -1) break;
 			++boardX;
 		}
 
@@ -53,7 +53,7 @@ void Board::deletePossibleLines() {
 
 bool Board::isGameOver() const {
 	for (int boardX = 0; boardX < kBoardWidth; boardX++) {
-		if (mBoard[boardX][0] > 0)
+		if (mBoard[boardX][0] > -1)
 			return true;
 	}
 
@@ -71,7 +71,7 @@ int Board::getYPosInPixels(int blockY) const {
 void Board::initBoard() {
 	for (int boardX{}; boardX < kBoardWidth; ++boardX) {
 		for (int boardY{}; boardY < kBoardHeight; ++boardY) {
-			mBoard[boardX][boardY] = 0;
+			mBoard[boardX][boardY] = -1;
 		}
 	}
 }

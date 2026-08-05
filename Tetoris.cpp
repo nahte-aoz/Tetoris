@@ -99,12 +99,12 @@ int main(int argc, char* args[])
                     SDL_DelayNS(nsPerFrame - frameNs);
                 }
 
-               /* ++fps;
+                /*++fps;
                 if (fps == 52)
-                    if (pieceY + 16 < kScreenHeight)
-                        pieceY += 16;
+                    if (game.mPosY + 1 < kBoardHeight)
+                        game.mPosY += 1;
                     else
-                        pieceY = 0;
+                        game.mPosY = 0;
 
                 if (fps > 60)
                     fps = 0;*/
