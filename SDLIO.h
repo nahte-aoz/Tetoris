@@ -112,7 +112,7 @@ private:
 bool init();
 
 //Loads media
-bool loadMedia();
+bool loadMedia(LTexture& gTexture, std::string filepath);
 
 //Frees media and shuts down SDL
 void close();
@@ -122,3 +122,4 @@ bool checkCollision(SDL_Rect a, SDL_Rect b);
 
 //Global square texture
 extern LTexture gSquareTexture;
+extern LTexture gBorderTexture;

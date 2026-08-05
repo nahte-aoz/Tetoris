@@ -8,7 +8,7 @@ constexpr int kBoardWidth{ 10 };
 constexpr int kBoardHeight{ 20 };
 constexpr int kBoardLineWidth{ 6 }; // Width of each of the two lines that delimit the board
 constexpr int kBoardPosition{ kScreenWidth / 2 };
-constexpr int kBlockSize{ 16 };
+constexpr int kBlockSize{ 32 };
 constexpr int kMinVerticalMargin{ 20 };
 constexpr int kMinHorizontalMargin{ 20 };
 constexpr int mPieceBlocks{ 5 }; // Number of horizontal and vertical blocks of a matrix piece

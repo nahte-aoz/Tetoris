@@ -273,7 +273,7 @@ bool init()
     else
     {
         //Create window with renderer
-        if (SDL_CreateWindowAndRenderer("SDL3 Tutorial: State Machines", kScreenWidth, kScreenHeight, 0, &gWindow, &gRenderer) == false)
+        if (SDL_CreateWindowAndRenderer("Tetoris", kScreenWidth, kScreenHeight, 0, &gWindow, &gRenderer) == false)
         {
             SDL_Log("Window could not be created! SDL error: %s\n", SDL_GetError());
             success = false;
@@ -292,13 +292,13 @@ bool init()
     return success;
 }
 
-bool loadMedia()
+bool loadMedia(LTexture& gTexture, std::string filepath)
 {
     //File loading flag
     bool success{ true };
 
     //Load glocal assets
-    if (gSquareTexture.loadFromFile("Square.png") == false)
+    if (gTexture.loadFromFile(filepath) == false)
     {
         SDL_Log("Unable to dot image!\n");
         success = false;
@@ -318,6 +318,7 @@ void close()
 {
     //Clean up textures
     gSquareTexture.destroy();
+    gBorderTexture.destroy();
 
     //Free font
     TTF_CloseFont(gFont);
@@ -377,3 +378,4 @@ bool checkCollision(SDL_Rect a, SDL_Rect b)
 }
 
 LTexture gSquareTexture;
+LTexture gBorderTexture;

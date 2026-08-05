@@ -23,7 +23,7 @@ int main(int argc, char* args[])
     else
     {
         //Load media
-        if (loadMedia() == false)
+        if (loadMedia(gSquareTexture, "Square.png") == false || loadMedia(gBorderTexture, "Square2.png") == false)
         {
             SDL_Log("Unable to load media!\n");
             exitCode = 2;
@@ -45,10 +45,7 @@ int main(int argc, char* args[])
 
             Pieces* pieces{ Pieces::get() };
 
-            int pieceColor{ 0 };
-            int pieceX{ kScreenWidth / 2 };
-            int pieceY{ kScreenHeight / 2 };
-            int throwawayIndex{ 0 };
+            int fps{ 0 };
 
             //The main loop
             while (quit == false)
@@ -61,36 +58,35 @@ int main(int argc, char* args[])
                 {
 
                     //Exit on quit
-                    if (e.type == SDL_EVENT_QUIT)
+                    if (e.type == SDL_EVENT_QUIT || e.key.key == SDLK_ESCAPE)
                     {
                         quit = true;
                     }
-                    else if (e.key.key == SDLK_DOWN) {
-                        game.createNewPiece();
-                        pieceY += 48;
+                    else if (e.type == SDL_EVENT_KEY_DOWN && e.key.repeat == 0) {
+                        switch (e.key.key) {
+                        case SDLK_RETURN: 
+                        {
+                            game.createNewPiece(); break;
+                        }
+                        case SDLK_LEFT:
+                        {
+                            game.mPosX -= 1; break;
+                        }
+                        case SDLK_RIGHT:
+                        {
+                            game.mPosX += 1; break;
+                        }
+                        }
                     }
                 }
 
                 //Fill the background
                 SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-                /*SDL_RenderClear(gRenderer);*/
+                SDL_RenderClear(gRenderer);
 
-                enum Colors {
-                    red,
-                    green,
-                    blue,
-                    maxColors,
-                };
+                game.renderBoard();
 
-                Uint8 colors[maxColors][maxColors]{
-                   /* Red */   {0x9F, 0x00, 0x00},
-                   /* Green */ {0x00, 0x9F, 0x00},
-                   /* Blue */  {0x00, 0x00, 0x9F}
-                };
-
-
-                    gSquareTexture.setColor(colors[pieceColor][red], colors[pieceColor][green], colors[pieceColor][blue]);
-                    game.renderPiece(pieceX, pieceY);
+                game.renderPiece();
 
                 //Update screen
                 SDL_RenderPresent(gRenderer);
@@ -102,6 +98,18 @@ int main(int argc, char* args[])
                 {
                     SDL_DelayNS(nsPerFrame - frameNs);
                 }
+
+               /* ++fps;
+                if (fps == 52)
+                    if (pieceY + 16 < kScreenHeight)
+                        pieceY += 16;
+                    else
+                        pieceY = 0;
+
+                if (fps > 60)
+                    fps = 0;*/
+
+               
             }
         }
     }

@@ -6,7 +6,7 @@ Board* Board::get() {
 }
 
 bool Board::isFreeBlock(int x, int y) const {
-	return mBoard[x][y] == POS_FREE;
+	return mBoard[x][y] == 0;
 }
 
 bool Board::isPossibleMovement(int piece, int rotation, int x, int y) const {
@@ -34,7 +34,7 @@ void Board::storePiece(int piece, int rotation, int x, int y) {
 	for (int boardX = x, piecesRowIndex{ 0 }; boardX < x + mPieceBlocks; ++boardX, ++piecesRowIndex) {
 		for (int boardY = y, piecesColIndex{ 0 }; boardY < y + mPieceBlocks; ++boardY, ++piecesColIndex) {
 			if (mPieces->getBlockType(piece, rotation, piecesColIndex, piecesRowIndex) != 0)
-				mBoard[boardX][boardY] = POS_FILLED;
+				mBoard[boardX][boardY] = piece;
 		}
 	}
 }
@@ -43,7 +43,7 @@ void Board::deletePossibleLines() {
 	for (int boardY{ 0 }; boardY < kBoardHeight; ++boardY) {
 		int boardX{};
 		while (boardX < kBoardWidth) {
-			if (mBoard[boardX][boardY] != POS_FILLED) break;
+			if (mBoard[boardX][boardY] != 0) break;
 			++boardX;
 		}
 
@@ -53,7 +53,7 @@ void Board::deletePossibleLines() {
 
 bool Board::isGameOver() const {
 	for (int boardX = 0; boardX < kBoardWidth; boardX++) {
-		if (mBoard[boardX][0] == POS_FILLED)
+		if (mBoard[boardX][0] > 0)
 			return true;
 	}
 
@@ -71,7 +71,7 @@ int Board::getYPosInPixels(int blockY) const {
 void Board::initBoard() {
 	for (int boardX{}; boardX < kBoardWidth; ++boardX) {
 		for (int boardY{}; boardY < kBoardHeight; ++boardY) {
-			mBoard[boardX][boardY] = POS_FREE;
+			mBoard[boardX][boardY] = 0;
 		}
 	}
 }
