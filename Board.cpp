@@ -13,11 +13,11 @@ bool Board::isPossibleMovement(int piece, int rotation, int x, int y) const {
 	for (int boardX = x, piecesRowIndex{ 0 }; boardX < x + mPieceBlocks; ++boardX, ++piecesRowIndex) {
 		for (int boardY = y, piecesColIndex{ 0 }; boardY < y + mPieceBlocks; ++boardY, ++piecesColIndex) {
 			if (boardX < 0 || boardX > kBoardWidth || boardY > kBoardHeight) {
-				if (mPieces->getBlockType(piece, rotation, piecesColIndex, piecesRowIndex) != -1)
+				if (mPieces->getBlockType(piece, rotation, piecesColIndex, piecesRowIndex) != 0)
 					return false;
 			}
 			if (boardY >= 0) {
-				if (mPieces->getBlockType(piece, rotation, piecesColIndex, piecesRowIndex) != -1 && !isFreeBlock(boardX, boardY)) {
+				if (mPieces->getBlockType(piece, rotation, piecesColIndex, piecesRowIndex) != 0 && !isFreeBlock(boardX, boardY)) {
 					return false;
 				}
 			}
@@ -33,7 +33,7 @@ void Board::storePiece(int piece, int rotation, int x, int y) {
 
 	for (int boardX = x, piecesRowIndex{ 0 }; boardX < x + mPieceBlocks; ++boardX, ++piecesRowIndex) {
 		for (int boardY = y, piecesColIndex{ 0 }; boardY < y + mPieceBlocks; ++boardY, ++piecesColIndex) {
-			if (mPieces->getBlockType(piece, rotation, piecesColIndex, piecesRowIndex) != -1)
+			if (mPieces->getBlockType(piece, rotation, piecesColIndex, piecesRowIndex) != 0)
 				mBoard[boardX][boardY] = piece;
 		}
 	}
@@ -66,6 +66,10 @@ int Board::getXPosInPixels(int blockX) const {
 
 int Board::getYPosInPixels(int blockY) const {
 	return ((kScreenHeight - (kBoardHeight * kBlockSize)) + (blockY * kBlockSize));
+}
+
+int Board::indexBoard(int x, int y) const {
+	return mBoard[x][y];
 }
 
 void Board::initBoard() {

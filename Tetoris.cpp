@@ -23,7 +23,8 @@ int main(int argc, char* args[])
     else
     {
         //Load media
-        if (loadMedia(gSquareTexture, "Square.png") == false || loadMedia(gBorderTexture, "Square2.png") == false)
+        if (loadMedia(gSquareTexture, "Square.png") == false || loadMedia(gBorderTexture, "SquareBorder.png") == false
+          || loadMedia(gSquareRed, "SquareRed.png") == false || loadMedia(gSquareGreen, "SquareGreen.png") == false || loadMedia (gSquareBlue, "SquareBlue.png") == false)
         {
             SDL_Log("Unable to load media!\n");
             exitCode = 2;
@@ -43,7 +44,17 @@ int main(int argc, char* args[])
             Game game{};
             game.createNewPiece();
 
-            Pieces* pieces{ Pieces::get() };
+            for (int row{}; row < kBoardHeight; ++row) {
+                for (int col{}; col < kBoardWidth; ++col) {
+                    if (!game.getBoard()->isFreeBlock(col, row)) {
+                        std::cout << '#';
+                    }
+                    else
+                        std::cout << '.';
+                }
+                std::cout << '\n';
+            }
+            std::cout << '\n';
 
             int fps{ 0 };
 
@@ -68,6 +79,14 @@ int main(int argc, char* args[])
                         {
                             game.createNewPiece(); break;
                         }
+                        case SDLK_DOWN: 
+                        {
+                            game.mPosY += 1; break;
+                        }
+                        case SDLK_UP: 
+                        {
+                            game.mPosY -= 1; break;
+                        }
                         case SDLK_LEFT:
                         {
                             game.mPosX -= 1; break;
@@ -75,6 +94,23 @@ int main(int argc, char* args[])
                         case SDLK_RIGHT:
                         {
                             game.mPosX += 1; break;
+                        }
+                        case SDLK_P: {
+                            game.getBoard()->storePiece(game.mPiece, game.mRotation, game.mPosX, game.mPosY);
+                            std::cout << "Current block type: " << game.mPiece << '\n';
+                            std::cout << "Current rotation: " << game.mRotation << '\n';
+                            for (int row{}; row < kBoardHeight; ++row) {
+                                for (int col{}; col < kBoardWidth; ++col) {
+                                    if (!game.getBoard()->isFreeBlock(col, row)) {
+                                        std::cout << '#';
+                                    }
+                                    else
+                                        std::cout << '.';
+                                }
+                                std::cout << '\n';
+                            }
+
+                            std::cout << '\n';
                         }
                         }
                     }

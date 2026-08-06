@@ -15,7 +15,7 @@ void Game::createNewPiece() {
 void Game::renderPiece() {
 
     // Set color based off piece type
-    if (mPiece == Pieces::SQUARE_BLOCK  || mPiece == Pieces::L_REVERSE || mPiece == Pieces::N_REVERSE)
+    if (mPiece == Pieces::SQUARE_BLOCK  || mPiece == Pieces::L_REVERSE || mPiece == Pieces::T_BLOCK)
         mPieceColor = RED;
     else if (mPiece == Pieces::I_BLOCK || mPiece == Pieces::N_BLOCK)
         mPieceColor = GREEN;
@@ -28,58 +28,69 @@ void Game::renderPiece() {
         mNewPiece = false;
     }
 
-    // Hold the x, y, and indexes of the last square in the piece that was rendered
-    // The x is initialized with the left pixels of the board + the initial starting point + one block to account for
-    // me not being able to render the board precisely in the middle of the screen. Teehee
-    /*kBoardLimitLeft + (mPosX * kBlockSize) + kBlockSize
-        kScreenHeight - (kBlockSize * kBoardHeight) + (mPosY * kBlockSize) + kBlockSize*/
-    int lastSquareX{ mBoard->getXPosInPixels(mPosX) };
-    int lastSquareY{ mBoard->getYPosInPixels(mPosY) };
-    int lastSquareRow{ 0 };
-    int lastSquareCol{ 0 };
+    int squareX{};
+    int squareY{};
 
-    for (int row{}; row < kRow; ++row) {
-        for (int col{}; col < kCol; ++col) {
-            if (mPieces->getBlockType(mPiece, mRotation, col, row) != 0) {
-                if (row > lastSquareRow) {
-                    lastSquareX += kBlockSize;
-                }
-                if (col > lastSquareCol) {
-                    lastSquareY += kBlockSize;
-                }
+    for (int col{}; col < kCol; ++col) {
+        for (int row{}; row < kRow; ++row) {
+            if (mPieces->getBlockType(mPiece, mRotation, row, col) != 0) {
+                squareX = mBoard->getXPosInPixels(mPosX + col);
+                squareY = mBoard->getYPosInPixels(mPosY + row);
 
-                lastSquareRow = row;
-                lastSquareCol = col;
-
-
-                gSquareTexture.render(static_cast<float>(lastSquareX), static_cast<float>(lastSquareY), nullptr, kBlockSize, kBlockSize);
+                gSquareTexture.render(static_cast<float>(squareX), static_cast<float>(squareY), nullptr, kBlockSize, kBlockSize);
             }
         }
 
-        lastSquareRow = 0;
     }
 
 }
 
 void Game::renderBoard() {
 
-    int rectX{ kBoardLimitLeft };
-    int rectY{ kBoardLimitUp };
+    int rectX{ mBoard->getXPosInPixels(-1) };
+    int rectY{ mBoard->getYPosInPixels(0) };
 
     gBorderTexture.setColor(0x0F, 0x0F, 0x0F);
 
-    while (rectY < kScreenHeight - kBlockSize) {
+    while (rectY < mBoard->getYPosInPixels(kBoardHeight)) {
         gBorderTexture.render(static_cast<float>(rectX), static_cast<float>(rectY), nullptr, kBlockSize, kBlockSize);
-        rectX = kBoardLimitRight;
+        rectX = mBoard->getXPosInPixels(kBoardWidth);
         gBorderTexture.render(static_cast<float>(rectX), static_cast<float>(rectY), nullptr, kBlockSize, kBlockSize);
-        rectX = kBoardLimitLeft;
-        rectY += kBlockSize;
+        rectX = mBoard->getXPosInPixels(-1);
+        rectY += 1;
     }
 
-    rectY = kScreenHeight - kBlockSize;
-    while (rectX <= kBoardLimitRight) {
+    rectY = mBoard->getYPosInPixels(kBoardHeight);
+    while (rectX <= mBoard->getXPosInPixels(kBoardWidth)) {
         gBorderTexture.render(static_cast<float>(rectX), static_cast<float>(rectY), nullptr, kBlockSize, kBlockSize);
-        rectX += kBlockSize;
+        rectX += 1;
+    }
+
+    for (int row{}; row < kBoardHeight; ++row) {
+        for (int col{}; col < kBoardWidth; ++col) {
+            if (!getBoard()->isFreeBlock(col, row)) {
+                rectX = mBoard->getXPosInPixels(col);
+                rectY = mBoard->getYPosInPixels(row);
+
+                if (mBoard->indexBoard(col, row) == Pieces::SQUARE_BLOCK || mBoard->indexBoard(col, row) == Pieces::L_REVERSE || mBoard->indexBoard(col, row) == Pieces::T_BLOCK)
+                {
+                    gSquareRed.setColor(mColors[RED][RED], mColors[RED][GREEN], mColors[RED][BLUE]);
+                    gSquareRed.render(static_cast<float>(rectX), static_cast<float>(rectY), nullptr, kBlockSize, kBlockSize);
+                }
+                else if (mBoard->indexBoard(col, row) == Pieces::I_BLOCK || mBoard->indexBoard(col, row) == Pieces::N_BLOCK)
+                {
+                    gSquareGreen.setColor(mColors[GREEN][RED], mColors[GREEN][GREEN], mColors[GREEN][BLUE]);
+                    gSquareGreen.render(static_cast<float>(rectX), static_cast<float>(rectY), nullptr, kBlockSize, kBlockSize);
+                }
+                else if (mBoard->indexBoard(col, row) == Pieces::L_BLOCK || mBoard->indexBoard(col, row) == Pieces::N_REVERSE)
+                {
+                    gSquareBlue.setColor(mColors[BLUE][RED], mColors[BLUE][GREEN], mColors[BLUE][BLUE]);
+                    gSquareBlue.render(static_cast<float>(rectX), static_cast<float>(rectY), nullptr, kBlockSize, kBlockSize);
+                }
+            }
+
+        }
+
     }
 }
 

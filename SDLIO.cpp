@@ -379,3 +379,6 @@ bool checkCollision(SDL_Rect a, SDL_Rect b)
 
 LTexture gSquareTexture;
 LTexture gBorderTexture;
+LTexture gSquareRed;
+LTexture gSquareGreen;
+LTexture gSquareBlue;

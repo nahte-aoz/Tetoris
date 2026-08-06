@@ -22,9 +22,10 @@ public:
 
     static Pieces* get();
 
-    int getBlockType(int piece, int rotation, int x, int y);
-    int getXInitialPosition(int piece, int rotation);
-    int getYInitialPosition(int piece, int rotation);
+    int getBlockType(int piece, int rotation, int x, int y) const;
+    int getXInitialPosition(int piece, int rotation) const;
+    int findTopRow(int piece, int rotation) const;
+    int getYInitialPosition(int piece, int rotation) const;
 
     Pieces(const Pieces& pieces) = delete;
     Pieces& operator=(const Pieces& pieces) = delete;
