@@ -310,6 +310,15 @@ bool loadMedia(LTexture& gTexture, std::string filepath)
         SDL_Log("Could not load %s! SDL_ttf Error: %s\n", fontPath.c_str(), SDL_GetError());
         success = false;
     }
+    else
+    {
+        const SDL_Color textColor{ 0x00, 0x00, 0x00, 0xFF };
+        if (gGameOverText.loadFromRenderedText("Game over", textColor) == false)
+        {
+            SDL_Log("Could not load game over text texture %s! SDL_ttf Error: %s\n", fontPath.c_str(), SDL_GetError());
+            success = false;
+        }
+    }
 
     return success;
 }
@@ -382,3 +391,4 @@ LTexture gBorderTexture;
 LTexture gSquareRed;
 LTexture gSquareGreen;
 LTexture gSquareBlue;
+LTexture gGameOverText;

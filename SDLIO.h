@@ -126,3 +126,4 @@ extern LTexture gBorderTexture;
 extern LTexture gSquareRed;
 extern LTexture gSquareGreen;
 extern LTexture gSquareBlue;
+extern LTexture gGameOverText;

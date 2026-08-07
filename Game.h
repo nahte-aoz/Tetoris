@@ -28,6 +28,12 @@ public:
 
 	void renderBoard();
 
+	bool correctOutOfBounds(int newRotation);
+
+	bool verticalRotationCheck(int newRotation);
+
+	void handleEvent(SDL_Event *e);
+
 	Board* getBoard();
 
 	Pieces* getPieces();

@@ -44,6 +44,8 @@ int main(int argc, char* args[])
             Game game{};
             game.createNewPiece();
 
+
+            // Print board to console for testing
             for (int row{}; row < kBoardHeight; ++row) {
                 for (int col{}; col < kBoardWidth; ++col) {
                     if (!game.getBoard()->isFreeBlock(col, row)) {
@@ -68,61 +70,41 @@ int main(int argc, char* args[])
                 while (SDL_PollEvent(&e) == true)
                 {
 
+                    game.handleEvent(&e);
+
                     //Exit on quit
                     if (e.type == SDL_EVENT_QUIT || e.key.key == SDLK_ESCAPE)
                     {
                         quit = true;
                     }
-                    else if (e.type == SDL_EVENT_KEY_DOWN && e.key.repeat == 0) {
-                        switch (e.key.key) {
-                        case SDLK_RETURN: 
-                        {
-                            game.createNewPiece(); break;
-                        }
-                        case SDLK_DOWN: 
-                        {
-                            game.mPosY += 1; break;
-                        }
-                        case SDLK_UP: 
-                        {
-                            game.mPosY -= 1; break;
-                        }
-                        case SDLK_LEFT:
-                        {
-                            game.mPosX -= 1; break;
-                        }
-                        case SDLK_RIGHT:
-                        {
-                            game.mPosX += 1; break;
-                        }
-                        case SDLK_P: {
-                            game.getBoard()->storePiece(game.mPiece, game.mRotation, game.mPosX, game.mPosY);
-                            std::cout << "Current block type: " << game.mPiece << '\n';
-                            std::cout << "Current rotation: " << game.mRotation << '\n';
-                            for (int row{}; row < kBoardHeight; ++row) {
-                                for (int col{}; col < kBoardWidth; ++col) {
-                                    if (!game.getBoard()->isFreeBlock(col, row)) {
-                                        std::cout << '#';
-                                    }
-                                    else
-                                        std::cout << '.';
-                                }
-                                std::cout << '\n';
-                            }
-
-                            std::cout << '\n';
-                        }
-                        }
-                    }
+                        
                 }
 
+                // Drop block by 1 block every 800ms
+                ++fps;
+                if (fps == 52)
+                    if (game.getBoard()->isPossibleMovement(game.mPiece, game.mRotation, game.mPosX, game.mPosY + 1))
+                        game.mPosY += 1;
+                    else {
+                        game.getBoard()->storePiece(game.mPiece, game.mRotation, game.mPosX, game.mPosY);
+                        game.createNewPiece();
+                    }
+
+                if (fps > 60)
+                    fps = 0;
+
+                game.getBoard()->deletePossibleLines();
+         
                 //Fill the background
-                SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+                SDL_SetRenderDrawColor(gRenderer, 0xB4, 0xB4, 0xB4, 0xFF);
                 SDL_RenderClear(gRenderer);
 
                 game.renderBoard();
-
                 game.renderPiece();
+                if (game.getBoard()->isGameOver()) {
+                    gGameOverText.render(240, kScreenHeight / 2);
+                    quit = true;
+                }
 
                 //Update screen
                 SDL_RenderPresent(gRenderer);
@@ -135,17 +117,6 @@ int main(int argc, char* args[])
                     SDL_DelayNS(nsPerFrame - frameNs);
                 }
 
-                /*++fps;
-                if (fps == 52)
-                    if (game.mPosY + 1 < kBoardHeight)
-                        game.mPosY += 1;
-                    else
-                        game.mPosY = 0;
-
-                if (fps > 60)
-                    fps = 0;*/
-
-               
             }
         }
     }
