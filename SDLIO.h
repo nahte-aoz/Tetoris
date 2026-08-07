@@ -121,6 +121,7 @@ void close();
 bool checkCollision(SDL_Rect a, SDL_Rect b);
 
 //Global square texture
+extern LTexture gTeto;
 extern LTexture gSquareTexture;
 extern LTexture gBorderTexture;
 extern LTexture gSquareRed;

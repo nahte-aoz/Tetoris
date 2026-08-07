@@ -30,7 +30,7 @@ bool LTexture::loadFromFile(std::string path)
     else
     {
         //Color key image
-        if (SDL_SetSurfaceColorKey(loadedSurface, true, SDL_MapSurfaceRGB(loadedSurface, 0x00, 0xFF, 0xFF)) == false)
+        if (SDL_SetSurfaceColorKey(loadedSurface, true, SDL_MapSurfaceRGB(loadedSurface, 0xFF, 0xD9, 0x52)) == false)
         {
             SDL_Log("Unable to color key! SDL error: %s", SDL_GetError());
         }
@@ -386,6 +386,7 @@ bool checkCollision(SDL_Rect a, SDL_Rect b)
     return true;
 }
 
+LTexture gTeto;
 LTexture gSquareTexture;
 LTexture gBorderTexture;
 LTexture gSquareRed;

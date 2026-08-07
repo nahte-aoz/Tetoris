@@ -23,7 +23,7 @@ int main(int argc, char* args[])
     else
     {
         //Load media
-        if (loadMedia(gSquareTexture, "Square.png") == false || loadMedia(gBorderTexture, "SquareBorder.png") == false
+        if (loadMedia(gSquareTexture, "Square.png") == false || loadMedia(gBorderTexture, "SquareBorder.png") == false || loadMedia(gTeto, "tetoris.jpg") == false
           || loadMedia(gSquareRed, "SquareRed.png") == false || loadMedia(gSquareGreen, "SquareGreen.png") == false || loadMedia (gSquareBlue, "SquareBlue.png") == false)
         {
             SDL_Log("Unable to load media!\n");
@@ -98,6 +98,8 @@ int main(int argc, char* args[])
                 //Fill the background
                 SDL_SetRenderDrawColor(gRenderer, 0xB4, 0xB4, 0xB4, 0xFF);
                 SDL_RenderClear(gRenderer);
+
+                gTeto.render(45, 215);
 
                 game.renderBoard();
                 game.renderPiece();
