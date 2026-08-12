@@ -114,13 +114,12 @@ void Game::renderBoard() {
 // Only accounts for rotation moves because user shouldn't be able to move a piece left or right
 // out of bounds on their own.
 bool Game::correctOutOfBounds(int newRotation) {
-    int tempPiece{ mPiece };
     int tempRotation{ newRotation };
     int tempPosX{ mPosX };
     int tempPosY{ mPosY };
 
     int corrections{};
-    while (!mBoard->isPossibleMovement(tempPiece, tempRotation, tempPosX, tempPosY)) {
+    while (!mBoard->isPossibleMovement(mPiece, tempRotation, tempPosX, tempPosY)) {
         if (tempPosX > kBoardWidth)
             --tempPosX;
         else if (mPosX < 0)
@@ -132,35 +131,11 @@ bool Game::correctOutOfBounds(int newRotation) {
             return false;
     }
 
-    mPiece = tempPiece;
     mRotation = tempRotation;
     mPosX = tempPosX;
     mPosY = tempPosY;
     return true;
 }
-
-/* Didn't work lol */
-//bool Game::verticalRotationCheck(int newRotation) {
-//    int tempPiece{ mPiece };
-//    int tempRotation{ newRotation };
-//    int tempPosX{ mPosX };
-//    int tempPosY{ mPosY };
-//
-//    int corrections{};
-//    while (!mBoard->isPossibleMovement(tempPiece, tempRotation, tempPosX, tempPosY)) {
-//        ++tempPosY;
-//
-//        ++corrections;
-//        if (corrections > 2)
-//            return false;
-//    }
-//
-//    mPiece = tempPiece;
-//    mRotation = tempRotation;
-//    mPosX = tempPosX;
-//    mPosY = tempPosY;
-//    return true;
-//}
 
 void Game::handleEvent(SDL_Event *e) {
     if (e->type == SDL_EVENT_KEY_DOWN && e->key.repeat == 0)
@@ -228,6 +203,19 @@ void Game::handleEvent(SDL_Event *e) {
     }
 }
 
+void Game::dropPiece(int& fps) {
+    ++fps;
+    if (fps == 52)
+        if (mBoard->isPossibleMovement(mPiece, mRotation, mPosX, mPosY + 1))
+            mPosY += 1;
+        else {
+            mBoard->storePiece(mPiece, mRotation, mPosX, mPosY);
+            createNewPiece();
+        }
+
+    if (fps > 60)
+        fps = 0;
+}
 
 Board* Game::getBoard() { return mBoard; }
 

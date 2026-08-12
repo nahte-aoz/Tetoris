@@ -1,6 +1,5 @@
 /* Welcome to Tetoris! */
 
-#include <iostream>
 #include <SDL3/SDL_main.h>
 #include "SDLIO.h"
 #include "Constants.h"
@@ -42,9 +41,8 @@ int main(int argc, char* args[])
             LTimer capTimer;
 
             Game game{};
-            game.createNewPiece();
 
-
+#ifdef _IOSTREAM_
             // Print board to console for testing
             for (int row{}; row < kBoardHeight; ++row) {
                 for (int col{}; col < kBoardWidth; ++col) {
@@ -57,6 +55,7 @@ int main(int argc, char* args[])
                 std::cout << '\n';
             }
             std::cout << '\n';
+#endif
 
             int fps{ 0 };
 
@@ -81,28 +80,20 @@ int main(int argc, char* args[])
                 }
 
                 // Drop block by 1 block every 800ms
-                ++fps;
-                if (fps == 52)
-                    if (game.getBoard()->isPossibleMovement(game.mPiece, game.mRotation, game.mPosX, game.mPosY + 1))
-                        game.mPosY += 1;
-                    else {
-                        game.getBoard()->storePiece(game.mPiece, game.mRotation, game.mPosX, game.mPosY);
-                        game.createNewPiece();
-                    }
+                game.dropPiece(fps);
 
-                if (fps > 60)
-                    fps = 0;
-
+                // Delete possible cleared lines before rendering so the renderer doesn't register already cleared lines for unneccessary frames
                 game.getBoard()->deletePossibleLines();
          
                 //Fill the background
                 SDL_SetRenderDrawColor(gRenderer, 0xB4, 0xB4, 0xB4, 0xFF);
                 SDL_RenderClear(gRenderer);
 
+                // Teto!
                 gTeto.render(45, 215);
 
-                game.renderBoard();
                 game.renderPiece();
+                game.renderBoard();
                 if (game.getBoard()->isGameOver()) {
                     gGameOverText.render(240, kScreenHeight / 2);
                     quit = true;

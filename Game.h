@@ -30,9 +30,9 @@ public:
 
 	bool correctOutOfBounds(int newRotation);
 
-	bool verticalRotationCheck(int newRotation);
-
 	void handleEvent(SDL_Event *e);
+
+	void dropPiece(int& fps);
 
 	Board* getBoard();
 
