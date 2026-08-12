@@ -233,6 +233,8 @@ void Game::initGame() {
 	mNextRotation = Random::get(0, 3);
 	mNextPosX = kBoardWidth + 5;
 	mNextPosY = 5;
+
+    mNewPiece = true;
 }
 
 Game::Game() {
